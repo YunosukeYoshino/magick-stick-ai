@@ -8,15 +8,15 @@ import {
   ResetIcon,
   SparklesIcon,
   WandIcon,
-} from "./components/Icons";
-import { ImageUploader } from "./components/ImageUploader";
-import { Loader } from "./components/Loader";
-import { YAML_GENERATION_PROMPT } from "./constants";
+} from "./Icons";
+import { ImageUploader } from "./ImageUploader";
+import { Loader } from "./Loader";
+import { YAML_GENERATION_PROMPT } from "../constants";
 import {
   generateCharacterSheet,
   generateNewImage,
   generateYamlPrompt,
-} from "./services/geminiService";
+} from "../services/geminiService";
 
 // Helper function to convert a data URL to a File object
 async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
@@ -37,7 +37,7 @@ async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
 
 const STORAGE_KEY = "characterSheetGeneratorData";
 
-const App: React.FC = () => {
+export const CharacterSheetGenerator: React.FC = () => {
   const [referenceImage, setReferenceImage] = useState<ImageState | null>(null);
   const [generatedYaml, setGeneratedYaml] = useState<string | null>(null);
   const [isYamlLoading, setIsYamlLoading] = useState<boolean>(false);
@@ -410,50 +410,27 @@ const App: React.FC = () => {
   ]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-200 font-sans p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
-        <header className="text-center mb-8 relative">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
-            キャラクター設定 AIアシスタント
-          </h1>
-          <p className="text-lg text-gray-400">
-            キャラクター画像をアップロードして、設定資料の作成や新しいポーズの生成をしよう
-          </p>
-          <button
-            onClick={() => handleStartOver(true)}
-            className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 text-sm text-gray-400 hover:text-white bg-gray-800/50 hover:bg-gray-700/70 border border-gray-700 px-3 py-2 rounded-lg transition-colors"
-            title="Start Over"
-          >
-            <ResetIcon />
-            <span>最初からやり直す</span>
-          </button>
-        </header>
+    <>
+      {!characterSheet && (
+        <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl shadow-2xl border border-gray-700 max-w-4xl mx-auto">
+          <h2 className="text-2xl font-semibold mb-4 text-white flex items-center">
+            <span className="text-3xl mr-3">1.</span>参照画像をアップロード
+          </h2>
+          <ImageUploader
+            onImageUpload={handleImageUpload}
+            previewUrl={referenceImage?.previewUrl}
+          />
+        </div>
+      )}
 
-        <main>
-          {!characterSheet && (
-            <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl shadow-2xl border border-gray-700 max-w-4xl mx-auto">
-              <h2 className="text-2xl font-semibold mb-4 text-white flex items-center">
-                <span className="text-3xl mr-3">1.</span>参照画像をアップロード
-              </h2>
-              <ImageUploader
-                onImageUpload={handleImageUpload}
-                previewUrl={referenceImage?.previewUrl}
-              />
-            </div>
-          )}
+      {referenceImage && renderWorkflow()}
 
-          {referenceImage && renderWorkflow()}
-
-          {error && (
-            <div className="mt-6 bg-red-900/50 border border-red-500 text-red-300 p-4 rounded-lg max-w-4xl mx-auto">
-              <h3 className="font-bold">エラーが発生しました</h3>
-              <p>{error}</p>
-            </div>
-          )}
-        </main>
-      </div>
-    </div>
+      {error && (
+        <div className="mt-6 bg-red-900/50 border border-red-500 text-red-300 p-4 rounded-lg max-w-4xl mx-auto">
+          <h3 className="font-bold">エラーが発生しました</h3>
+          <p>{error}</p>
+        </div>
+      )}
+    </>
   );
 };
-
-export default App;
