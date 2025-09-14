@@ -15,7 +15,8 @@
     "check:fix": "bunx biome check --write .",
     "typecheck": "bunx tsc --noEmit",
     "organize-imports": "bunx biome check --organize-imports-enabled=true --write .",
-    "ci": "bun run typecheck && bun run check && bun run build"
+    "ci": "bun run typecheck && bun run check && bun run build",
+    "prepare": "husky"
   },
   "dependencies": {
     "@google/genai": "^1.19.0",
@@ -29,8 +30,19 @@
     "@types/node": "^22.14.0",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   },
-  "packageManager": "bun@1.1.0"
+  "packageManager": "bun@1.1.0",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "bunx biome check --write",
+      "bunx biome format --write"
+    ],
+    "*.{json,jsonc}": [
+      "bunx biome format --write"
+    ]
+  }
 }

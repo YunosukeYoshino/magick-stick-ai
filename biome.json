@@ -49,6 +49,6 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
   }
 }
