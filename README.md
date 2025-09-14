@@ -1,165 +1,173 @@
-# キャラクター設定 AIアシスタント
+# まじっくすてっき
 
+![magick-stick-ai](https://github.com/user-attachments/assets/6d084402-7fe5-429d-95c2-622f55d2ae4b)
 
-## 概要
+## 📖 概要
 
-キャラクター設定 AIアシスタントは、Google Gemini AIを活用した革新的なキャラクター作成ツールです。画像をアップロードするだけで、AIが自動的にキャラクターの特徴を分析し、設定資料の生成や新しいポーズの作成を支援します。
+**まじっくすてっき** は、Google Geminiの最新モデル **Gemini 2.5 Flash Image Preview**（`gemini-2.5-flash-image-preview`）を活用したキャラクター生成・管理アプリケーションです。
+
+画像をアップロードするだけでAIがキャラクターの特徴を解析し、設定資料や新しいポーズ・表情の生成を支援します。デザイナー、イラストレーター、ゲーム開発者に最適なオールインワンツールです。
+
+---
 
 ## ✨ 主な機能
 
-- **🎨 画像アップロード**: キャラクター画像を簡単にアップロード
-- **🤖 AI分析**: Google Gemini AIによる自動的なキャラクター特徴抽出
-- **📝 YAML生成**: 画像生成用のYAMLプロンプトを自動生成
-- **👤 キャラクターシート**: 全身立ち絵（正面・背面・側面）の自動生成
-- **🎭 ポーズ生成**: 新しいポーズや表情の生成
-- **🔄 リアルタイム処理**: 高速なAI処理とレスポンシブUI
+- **🎨 画像アップロード**: キャラクター画像をドラッグ&ドロップで簡単に追加
+- **🤖 AI解析 (Gemini 2.5 Flash Image Preview)**: キャラクターの特徴を自動抽出し、タグ・属性・設定資料を生成
+- **📝 YAMLプロンプト生成**: 画像生成用プロンプトをワンクリックで生成
+- **👤 キャラクターシート作成**: 正面・背面・側面の全身立ち絵を自動作成
+- **🎭 ポーズ・表情生成**: テキスト指示や参考画像をもとに新規ポーズや表情を生成
+- **🔄 リアルタイム処理**: 高速なAI推論とレスポンシブなUI
+
+---
 
 ## 🛠️ 技術スタック
 
 ### フロントエンド
-- **React 19** - 最新のReact機能を活用
-- **TanStack Router** - 型安全なルーティング
-- **TypeScript** - 完全な型安全性
-- **Vite** - 高速な開発環境とビルド
-- **Tailwind CSS** - モダンなスタイリング
+- **React 19** – 最新React APIによるモダンなUI
+- **TanStack Router** – 型安全なルーティング
+- **TypeScript** – 完全型安全な開発環境
+- **Vite** – 超高速な開発ビルド環境
+- **Tailwind CSS + shadcn/ui** – 美しく拡張性のあるデザイン
 
 ### AI・バックエンド
-- **Google Gemini AI** - 高度な画像分析と生成
-- **@google/genai** - Gemini API統合
+- **Gemini 2.5 Flash Image Preview**（`gemini-2.5-flash-image-preview`） – キャラクター特徴抽出・ポーズ生成エンジン
+- **@google/genai** – Gemini API統合
 
 ### 開発ツール
-- **Biome** - 高速なリンターとフォーマッター
-- **ESLint** - コード品質管理
+- **Biome** – 高速リンター・フォーマッター
+- **ESLint** – コード品質管理
 
-## 🚀 クイックスタート
+---
+
+## 🚀 クイックスタート（Bun版）
 
 ### 前提条件
-- Node.js 18.0.0 以上
+- Bun 1.1.0 以上
 - Google Gemini API キー
 
 ### セットアップ
 
-1. **リポジトリのクローン**
-   ```bash
-   git clone <repository-url>
-   cd character-sheet-ai-assistant
-   ```
+```bash
+# Bunのインストール（未導入の場合）
+curl -fsSL https://bun.sh/install | bash
 
-2. **依存関係のインストール**
-   ```bash
-   npm install
-   ```
+# リポジトリをクローン
+git clone <repository-url>
+cd magick-stick-ai
 
-3. **環境変数の設定**
-   ```bash
-   cp .env.sample .env.local
-   ```
+# 依存関係のインストール（npmではなくbun）
+bun install
 
-   `.env.local`ファイルにGemini APIキーを設定：
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key_here
-   ```
+# 環境変数の設定
+cp .env.sample .env.local
+```
 
-4. **開発サーバーの起動**
-   ```bash
-   npm run dev
-   ```
+`.env.local` に APIキーを設定：
 
-5. **ブラウザでアクセス**
-   ```
-   http://localhost:5173
-   ```
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-2.5-flash-image-preview
+```
 
-## 📚 ドキュメント
+```bash
+# 開発サーバーの起動（bun run）
+bun run dev
+```
 
-### TanStack Router
-- **公式ドキュメント**: [https://tanstack.com/router/latest](https://tanstack.com/router/latest)
-- **GitHub**: [https://github.com/tanstack/router](https://github.com/tanstack/router)
-- **型安全性ガイド**: [https://tanstack.com/router/latest/docs/framework/react/guide/type-safety](https://tanstack.com/router/latest/docs/framework/react/guide/type-safety)
+ブラウザで `http://localhost:5173` にアクセス。
 
-### Google Gemini AI
-- **公式ドキュメント**: [https://ai.google.dev/docs](https://ai.google.dev/docs)
-- **API リファレンス**: [https://ai.google.dev/api/rest](https://ai.google.dev/api/rest)
+---
 
-### その他の技術
+## 📚 参考ドキュメント
+
+- **Gemini 2.5 Flash Image Preview**: [https://ai.google.dev/docs](https://ai.google.dev/docs)
+- **TanStack Router**: [https://tanstack.com/router/latest](https://tanstack.com/router/latest)
 - **React 19**: [https://react.dev](https://react.dev)
-- **Vite**: [https://vitejs.dev](https://vitejs.dev)
-- **TypeScript**: [https://www.typescriptlang.org](https://www.typescriptlang.org)
 - **Tailwind CSS**: [https://tailwindcss.com](https://tailwindcss.com)
+- **Bun**: [https://bun.sh](https://bun.sh)
+
+---
 
 ## 🏗️ プロジェクト構造
 
 ```
-character-sheet-ai-assistant/
-├── components/           # Reactコンポーネント
+magick-stick-ai/
+├── components/           # UIコンポーネント
 │   ├── CharacterSheetGenerator.tsx
 │   ├── ImageUploader.tsx
 │   ├── Loader.tsx
 │   └── Navigation.tsx
-├── routes/              # TanStack Routerルート
-│   ├── __root.tsx       # ルートレイアウト
-│   ├── index.tsx        # ホームページ
-│   └── about.tsx        # アバウトページ
-├── services/            # APIサービス
-│   └── geminiService.ts
-├── types/               # TypeScript型定義
+├── routes/               # TanStack Routerルート
+│   ├── __root.tsx
+│   ├── index.tsx
+│   └── about.tsx
+├── services/             # APIサービス
+│   ├── geminiService.ts  # Gemini 2.5 Flash Image Preview連携
+├── types/                # 型定義
 │   ├── app.ts
 │   ├── env.d.ts
 │   └── router.d.ts
-├── router.tsx           # ルーター設定
-├── routeTree.gen.ts     # 自動生成ルートツリー
-└── vite.config.ts       # Vite設定
+├── router.tsx            # ルーター設定
+├── routeTree.gen.ts      # 自動生成ルートツリー
+└── vite.config.ts        # Vite設定
 ```
+
+---
 
 ## 🎯 使用方法
 
-1. **画像アップロード**: キャラクター画像をドラッグ&ドロップまたはクリックでアップロード
-2. **YAML生成**: 「YAMLプロンプトを生成」ボタンをクリックしてAI分析を開始
-3. **キャラクターシート作成**: 生成されたYAMLを基に全身立ち絵を作成
-4. **新しいポーズ生成**: テキスト指示や参考画像を使用して新しいポーズを生成
+1. **画像アップロード**: 画像をドラッグ&ドロップまたはクリックでアップロード
+2. **YAMLプロンプト生成**: 「YAMLプロンプト生成」ボタンをクリックしてAI解析を実行
+3. **キャラクターシート作成**: 生成されたプロンプトをもとに全身立ち絵を自動生成
+4. **ポーズ・表情生成**: テキスト指示または参考画像で新しいポーズ・表情を作成
 
-## 🔧 開発コマンド
+---
+
+## 🔧 開発コマンド（Bun版）
 
 ```bash
 # 開発サーバー起動
-npm run dev
+bun run dev
 
 # プロダクションビルド
-npm run build
+bun run build
 
 # ビルドプレビュー
-npm run preview
+bun run preview
 
 # リンター実行
-npm run lint
+bun run lint
 
 # リンター修正
-npm run lint:fix
+bun run lint:fix
 
 # フォーマッター実行
-npm run format
+bun run format
 
 # フォーマッター修正
-npm run format:fix
+bun run format:fix
 
 # 型チェック
-npm run typecheck
+bun run typecheck
 ```
+
+---
 
 ## 🌟 特徴
 
 ### 型安全性
-- **完全なTypeScript対応**: エンドツーエンドの型安全性
-- **TanStack Router**: 型安全なルーティングとナビゲーション
-- **厳密な型チェック**: 開発時のエラーを最小化
+- **完全TypeScript対応**でエンドツーエンド型安全
+- **TanStack Router**による型安全なナビゲーション
+- **厳密な型チェック**で開発時エラーを最小化
 
 ### パフォーマンス
-- **Vite**: 高速な開発サーバーとビルド
-- **コード分割**: 自動的なコード分割と遅延読み込み
-- **最適化**: プロダクション用の最適化されたバンドル
+- **Bun + Vite**による超高速な開発・ビルド
+- **自動コード分割**と遅延読み込み
+- **プロダクション最適化済み**バンドル
 
 ### 開発体験
-- **ホットリロード**: リアルタイムでの変更反映
-- **エラーハンドリング**: 包括的なエラー処理とユーザーフィードバック
-- **レスポンシブデザイン**: モバイルファーストのUI/UX
+- **ホットリロード**対応
+- **包括的なエラーハンドリング**
+- **モバイルファースト**のレスポンシブUI
 
