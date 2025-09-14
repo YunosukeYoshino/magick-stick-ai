@@ -4,18 +4,18 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --write .",
-    "format": "biome format .",
-    "format:fix": "biome format --write .",
-    "check": "biome check .",
-    "check:fix": "biome check --write .",
-    "typecheck": "tsc --noEmit",
-    "organize-imports": "biome check --organize-imports-enabled=true --write .",
-    "ci": "npm run typecheck && npm run check && npm run build"
+    "dev": "bun run vite",
+    "build": "bun run vite build",
+    "preview": "bun run vite preview",
+    "lint": "bunx biome lint .",
+    "lint:fix": "bunx biome lint --write .",
+    "format": "bunx biome format .",
+    "format:fix": "bunx biome format --write .",
+    "check": "bunx biome check .",
+    "check:fix": "bunx biome check --write .",
+    "typecheck": "bunx tsc --noEmit",
+    "organize-imports": "bunx biome check --organize-imports-enabled=true --write .",
+    "ci": "bun run typecheck && bun run check && bun run build"
   },
   "dependencies": {
     "@google/genai": "^1.19.0",
@@ -32,5 +32,5 @@
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   },
-  "packageManager": "npm@10.0.0"
+  "packageManager": "bun@1.1.0"
 }
