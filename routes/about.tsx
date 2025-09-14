@@ -1,6 +1,10 @@
-import { Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
-export function AboutComponent() {
+export const Route = createFileRoute("/about")({
+  component: AboutComponent,
+});
+
+function AboutComponent() {
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
