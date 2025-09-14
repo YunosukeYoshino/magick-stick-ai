@@ -20,7 +20,12 @@ jobs:
         bun-version: latest
 
     - name: Install dependencies
-      run: bun install --frozen-lockfile
+      run: |
+        if [ -f "bun.lock" ]; then
+          bun install --frozen-lockfile
+        else
+          bun install
+        fi
 
     - name: Verify Biome installation
       run: bunx @biomejs/biome --version
