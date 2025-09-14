@@ -71,7 +71,4 @@ export interface StateAction<T> {
   payload?: T;
 }
 
-export type StateReducer<T, A extends StateAction<unknown>> = (
-  state: T,
-  action: A
-) => T;
+export type StateReducer<T, A extends StateAction<unknown>> = (state: T, action: A) => T;

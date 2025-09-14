@@ -1,24 +1,22 @@
-import React, { useCallback, useId } from "react";
-import { UploadIcon } from "./Icons";
+import type React from 'react';
+import { useCallback, useId } from 'react';
+import { UploadIcon } from './Icons';
 
 interface ImageUploaderProps {
   onImageUpload: (file: File) => void;
   previewUrl?: string | undefined;
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({
-  onImageUpload,
-  previewUrl,
-}) => {
+export const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload, previewUrl }) => {
   const id = useId();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file && file.type.startsWith("image/")) {
+    if (file?.type.startsWith('image/')) {
       onImageUpload(file);
     }
     // Reset file input to allow uploading the same file again
-    event.target.value = "";
+    event.target.value = '';
   };
 
   const onDrop = useCallback(
@@ -26,7 +24,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       event.preventDefault();
       event.stopPropagation();
       const file = event.dataTransfer.files?.[0];
-      if (file && file.type.startsWith("image/")) {
+      if (file?.type.startsWith('image/')) {
         onImageUpload(file);
       }
     },
@@ -40,13 +38,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
   return (
     <div>
-      <input
-        type="file"
-        id={id}
-        accept="image/*"
-        onChange={handleFileChange}
-        className="hidden"
-      />
+      <input type="file" id={id} accept="image/*" onChange={handleFileChange} className="hidden" />
       <label
         htmlFor={id}
         onDrop={onDrop}
@@ -63,9 +55,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
           <div className="text-center text-gray-400">
             <UploadIcon />
             <p className="mt-2 text-sm">
-              <span className="font-semibold text-purple-400">
-                クリックしてアップロード
-              </span>
+              <span className="font-semibold text-purple-400">クリックしてアップロード</span>
               またはドラッグ＆ドロップ
             </p>
             <p className="text-xs">PNG, JPG, GIFなど</p>

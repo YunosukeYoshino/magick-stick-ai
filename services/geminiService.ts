@@ -1,10 +1,10 @@
-import { GoogleGenAI, Modality } from "@google/genai";
+import { GoogleGenAI, Modality } from '@google/genai';
 
 // 環境変数の型安全な取得
 const getApiKey = (): string => {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.API_KEY;
   if (!apiKey) {
-    throw new Error("GEMINI_API_KEY environment variable not set");
+    throw new Error('GEMINI_API_KEY environment variable not set');
   }
   return apiKey;
 };
@@ -20,12 +20,12 @@ const fileToGenerativePart = async (
     reader.onloadend = () => {
       const result = reader.result as string;
       if (!result) {
-        reject(new Error("Failed to read file"));
+        reject(new Error('Failed to read file'));
         return;
       }
-      resolve(result.split(",")[1] ?? "");
+      resolve(result.split(',')[1] ?? '');
     };
-    reader.onerror = () => reject(new Error("Failed to read file"));
+    reader.onerror = () => reject(new Error('Failed to read file'));
     reader.readAsDataURL(file);
   });
 
@@ -38,34 +38,29 @@ const fileToGenerativePart = async (
 };
 
 // YAMLプロンプトを生成する関数
-export const generateYamlPrompt = async (
-  imageFile: File,
-  prompt: string
-): Promise<string> => {
+export const generateYamlPrompt = async (imageFile: File, prompt: string): Promise<string> => {
   try {
     const imagePart = await fileToGenerativePart(imageFile);
     const textPart = { text: prompt };
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: 'gemini-2.5-flash',
       contents: { parts: [imagePart, textPart] },
     });
 
     const yamlText = response.text;
     if (!yamlText) {
-      throw new Error("API did not return any text. Please try again.");
+      throw new Error('API did not return any text. Please try again.');
     }
 
     // YAMLコードブロックのマークダウン記法を除去
     return yamlText
-      .replace(/^```yaml\n/, "")
-      .replace(/```$/, "")
+      .replace(/^```yaml\n/, '')
+      .replace(/```$/, '')
       .trim();
   } catch (error) {
-    console.error("Error generating YAML prompt:", error);
-    throw error instanceof Error
-      ? error
-      : new Error("Failed to generate YAML prompt");
+    console.error('Error generating YAML prompt:', error);
+    throw error instanceof Error ? error : new Error('Failed to generate YAML prompt');
   }
 };
 
@@ -89,7 +84,7 @@ ${yamlPrompt}`,
     };
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash-image-preview",
+      model: 'gemini-2.5-flash-image-preview',
       contents: { parts: [imagePart, textPart] },
       config: {
         responseModalities: [Modality.IMAGE, Modality.TEXT],
@@ -112,8 +107,7 @@ ${yamlPrompt}`,
     }
 
     if (!imageUrl) {
-      let fallbackText =
-        "Character sheet generation failed. The model did not return an image.";
+      let fallbackText = 'Character sheet generation failed. The model did not return an image.';
       const textResponse = response.text;
       if (textResponse) {
         fallbackText += ` The AI returned text instead: "${textResponse.trim()}"`;
@@ -123,10 +117,8 @@ ${yamlPrompt}`,
 
     return imageUrl;
   } catch (error) {
-    console.error("Error generating character sheet:", error);
-    throw error instanceof Error
-      ? error
-      : new Error("Failed to generate character sheet");
+    console.error('Error generating character sheet:', error);
+    throw error instanceof Error ? error : new Error('Failed to generate character sheet');
   }
 };
 
@@ -137,10 +129,7 @@ export const generateNewImage = async (
   compositionImageFile?: File
 ): Promise<{ image: string | null; text: string | null }> => {
   try {
-    const parts: (
-      | { text: string }
-      | { inlineData: { data: string; mimeType: string } }
-    )[] = [];
+    const parts: ({ text: string } | { inlineData: { data: string; mimeType: string } })[] = [];
 
     // 1. Add Character Sheet
     const characterSheetPart = await fileToGenerativePart(characterSheetFile);
@@ -148,9 +137,7 @@ export const generateNewImage = async (
 
     // 2. Add Composition Image if it exists
     if (compositionImageFile) {
-      const compositionImagePart = await fileToGenerativePart(
-        compositionImageFile
-      );
+      const compositionImagePart = await fileToGenerativePart(compositionImageFile);
       parts.push(compositionImagePart);
     }
 
@@ -160,7 +147,8 @@ export const generateNewImage = async (
 `;
 
     if (compositionImageFile) {
-      textPrompt += `- The **second image** is a reference for the pose and composition. Recreate the pose and composition from the second image, but draw the character from the first image.\n`;
+      textPrompt +=
+        '- The **second image** is a reference for the pose and composition. Recreate the pose and composition from the second image, but draw the character from the first image.\n';
     }
 
     textPrompt += `- The **text prompt** provides specific instructions. Follow these instructions: "${prompt}"`;
@@ -168,7 +156,7 @@ export const generateNewImage = async (
     parts.push({ text: textPrompt });
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash-image-preview",
+      model: 'gemini-2.5-flash-image-preview',
       contents: { parts },
       config: {
         responseModalities: [Modality.IMAGE, Modality.TEXT],
@@ -196,15 +184,13 @@ export const generateNewImage = async (
       const fallbackText =
         responseText ||
         response.text ||
-        "No image was generated. The model might have refused the prompt for safety reasons.";
+        'No image was generated. The model might have refused the prompt for safety reasons.';
       return { image: null, text: fallbackText };
     }
 
     return { image: imageUrl, text: responseText };
   } catch (error) {
-    console.error("Error generating new image:", error);
-    throw error instanceof Error
-      ? error
-      : new Error("Failed to generate new image");
+    console.error('Error generating new image:', error);
+    throw error instanceof Error ? error : new Error('Failed to generate new image');
   }
 };

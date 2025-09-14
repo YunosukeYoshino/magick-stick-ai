@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { CharacterSheetGenerator } from "@/components/CharacterSheetGenerator";
+import { CharacterSheetGenerator } from '@/components/CharacterSheetGenerator';
+import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute('/')({
   component: IndexComponent,
 });
 

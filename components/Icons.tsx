@@ -1,4 +1,4 @@
-import type React from "react";
+import type React from 'react';
 
 export const UploadIcon: React.FC = () => (
   <svg
@@ -10,6 +10,7 @@ export const UploadIcon: React.FC = () => (
     strokeWidth={1}
     aria-label="Upload icon"
   >
+    <title>Upload icon</title>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -28,6 +29,7 @@ export const CopyIcon: React.FC = () => (
     strokeWidth={2}
     aria-label="Copy icon"
   >
+    <title>Copy icon</title>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -46,6 +48,7 @@ export const WandIcon: React.FC = () => (
     strokeWidth={2}
     aria-label="Wand icon"
   >
+    <title>Wand icon</title>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -64,6 +67,7 @@ export const SparklesIcon: React.FC = () => (
     strokeWidth={2}
     aria-label="Sparkles icon"
   >
+    <title>Sparkles icon</title>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -82,6 +86,7 @@ export const PersonIcon: React.FC = () => (
     strokeWidth={2}
     aria-label="Person icon"
   >
+    <title>Person icon</title>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -100,11 +105,8 @@ export const ResetIcon: React.FC = () => (
     strokeWidth={2}
     aria-label="Reset icon"
   >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M4 4v5h5M20 20v-5h-5M4 4l16 16"
-    />
+    <title>Reset icon</title>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h5M20 20v-5h-5M4 4l16 16" />
   </svg>
 );
 
@@ -118,6 +120,7 @@ export const ImageIcon: React.FC = () => (
     strokeWidth={2}
     aria-label="Image icon"
   >
+    <title>Image icon</title>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"

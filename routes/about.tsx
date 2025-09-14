@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link, createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute("/about")({
+export const Route = createFileRoute('/about')({
   component: AboutComponent,
 });
 
@@ -25,9 +25,7 @@ function AboutComponent() {
               <li>• 新しいポーズや表情の生成</li>
             </ul>
 
-            <h2 className="text-2xl font-semibold text-white mb-4 mt-8">
-              技術スタック
-            </h2>
+            <h2 className="text-2xl font-semibold text-white mb-4 mt-8">技術スタック</h2>
             <ul className="text-gray-300 space-y-2">
               <li>• React 19</li>
               <li>• TanStack Router</li>

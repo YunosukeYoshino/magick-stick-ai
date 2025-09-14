@@ -38,6 +38,7 @@
   "packageManager": "bun@1.1.0",
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
+      "bunx biome lint",
       "bunx biome check --write",
       "bunx biome format --write"
     ],

@@ -31,15 +31,15 @@ export interface SavedData {
 }
 
 export type AppAction =
-  | { type: "SET_REFERENCE_IMAGE"; payload: ImageState | null }
-  | { type: "SET_GENERATED_YAML"; payload: string | null }
-  | { type: "SET_YAML_LOADING"; payload: boolean }
-  | { type: "SET_CHARACTER_SHEET"; payload: string | null }
-  | { type: "SET_SHEET_LOADING"; payload: boolean }
-  | { type: "SET_NEW_POSE_PROMPT"; payload: string }
-  | { type: "SET_COMPOSITION_IMAGE"; payload: ImageState | null }
-  | { type: "SET_GENERATED_IMAGE"; payload: GeneratedImage | null }
-  | { type: "SET_NEW_IMAGE_LOADING"; payload: boolean }
-  | { type: "SET_ERROR"; payload: string | null }
-  | { type: "SET_COPY_SUCCESS"; payload: boolean }
-  | { type: "RESET_STATE" };
+  | { type: 'SET_REFERENCE_IMAGE'; payload: ImageState | null }
+  | { type: 'SET_GENERATED_YAML'; payload: string | null }
+  | { type: 'SET_YAML_LOADING'; payload: boolean }
+  | { type: 'SET_CHARACTER_SHEET'; payload: string | null }
+  | { type: 'SET_SHEET_LOADING'; payload: boolean }
+  | { type: 'SET_NEW_POSE_PROMPT'; payload: string }
+  | { type: 'SET_COMPOSITION_IMAGE'; payload: ImageState | null }
+  | { type: 'SET_GENERATED_IMAGE'; payload: GeneratedImage | null }
+  | { type: 'SET_NEW_IMAGE_LOADING'; payload: boolean }
+  | { type: 'SET_ERROR'; payload: string | null }
+  | { type: 'SET_COPY_SUCCESS'; payload: boolean }
+  | { type: 'RESET_STATE' };

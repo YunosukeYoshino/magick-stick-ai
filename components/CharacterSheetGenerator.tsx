@@ -1,22 +1,15 @@
-import type React from "react";
-import { useCallback, useEffect, useState } from "react";
-import type { GeneratedImage, ImageState, SavedData } from "@/types/app";
-import {
-  CopyIcon,
-  ImageIcon,
-  PersonIcon,
-  ResetIcon,
-  SparklesIcon,
-  WandIcon,
-} from "./Icons";
-import { ImageUploader } from "./ImageUploader";
-import { Loader } from "./Loader";
-import { YAML_GENERATION_PROMPT } from "../constants";
+import type { GeneratedImage, ImageState, SavedData } from '@/types/app';
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { YAML_GENERATION_PROMPT } from '../constants';
 import {
   generateCharacterSheet,
   generateNewImage,
   generateYamlPrompt,
-} from "../services/geminiService";
+} from '../services/geminiService';
+import { CopyIcon, ImageIcon, PersonIcon, ResetIcon, SparklesIcon, WandIcon } from './Icons';
+import { ImageUploader } from './ImageUploader';
+import { Loader } from './Loader';
 
 // Helper function to convert a data URL to a File object
 async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
@@ -28,14 +21,12 @@ async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
     const blob = await res.blob();
     return new File([blob], filename, { type: blob.type });
   } catch (error) {
-    console.error("Error converting data URL to file:", error);
-    throw error instanceof Error
-      ? error
-      : new Error("Failed to convert data URL to file");
+    console.error('Error converting data URL to file:', error);
+    throw error instanceof Error ? error : new Error('Failed to convert data URL to file');
   }
 }
 
-const STORAGE_KEY = "characterSheetGeneratorData";
+const STORAGE_KEY = 'characterSheetGeneratorData';
 
 export const CharacterSheetGenerator: React.FC = () => {
   const [referenceImage, setReferenceImage] = useState<ImageState | null>(null);
@@ -43,13 +34,9 @@ export const CharacterSheetGenerator: React.FC = () => {
   const [isYamlLoading, setIsYamlLoading] = useState<boolean>(false);
   const [characterSheet, setCharacterSheet] = useState<string | null>(null);
   const [isSheetLoading, setIsSheetLoading] = useState<boolean>(false);
-  const [newPosePrompt, setNewPosePrompt] = useState<string>("笑顔で手を振る");
-  const [compositionImage, setCompositionImage] = useState<ImageState | null>(
-    null
-  );
-  const [generatedImage, setGeneratedImage] = useState<GeneratedImage | null>(
-    null
-  );
+  const [newPosePrompt, setNewPosePrompt] = useState<string>('笑顔で手を振る');
+  const [compositionImage, setCompositionImage] = useState<ImageState | null>(null);
+  const [generatedImage, setGeneratedImage] = useState<GeneratedImage | null>(null);
   const [isNewImageLoading, setIsNewImageLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
@@ -59,8 +46,7 @@ export const CharacterSheetGenerator: React.FC = () => {
       const savedData = localStorage.getItem(STORAGE_KEY);
       if (savedData) {
         const parsedData: SavedData = JSON.parse(savedData);
-        const { referenceImagePreviewUrl, generatedYaml, characterSheetUrl } =
-          parsedData;
+        const { referenceImagePreviewUrl, generatedYaml, characterSheetUrl } = parsedData;
 
         if (referenceImagePreviewUrl) {
           // We don't have the file, but we have the preview URL for display
@@ -77,7 +63,7 @@ export const CharacterSheetGenerator: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error("Failed to load saved data:", error);
+      console.error('Failed to load saved data:', error);
       localStorage.removeItem(STORAGE_KEY);
     }
   }, []);
@@ -102,10 +88,7 @@ export const CharacterSheetGenerator: React.FC = () => {
     setCharacterSheet(null);
     setIsYamlLoading(true);
     try {
-      const yaml = await generateYamlPrompt(
-        referenceImage.file,
-        YAML_GENERATION_PROMPT
-      );
+      const yaml = await generateYamlPrompt(referenceImage.file, YAML_GENERATION_PROMPT);
       setGeneratedYaml(yaml);
       // Save state
       const dataToSave: SavedData = {
@@ -118,9 +101,9 @@ export const CharacterSheetGenerator: React.FC = () => {
       const errorMessage =
         error instanceof Error
           ? error.message
-          : "An unknown error occurred during YAML generation.";
+          : 'An unknown error occurred during YAML generation.';
       setError(errorMessage);
-      console.error("YAML generation error:", error);
+      console.error('YAML generation error:', error);
     } finally {
       setIsYamlLoading(false);
     }
@@ -132,10 +115,7 @@ export const CharacterSheetGenerator: React.FC = () => {
     setGeneratedImage(null);
     setIsSheetLoading(true);
     try {
-      const sheetImageUrl = await generateCharacterSheet(
-        referenceImage.file,
-        generatedYaml
-      );
+      const sheetImageUrl = await generateCharacterSheet(referenceImage.file, generatedYaml);
       setCharacterSheet(sheetImageUrl);
       // Save state
       const dataToSave: SavedData = {
@@ -148,9 +128,9 @@ export const CharacterSheetGenerator: React.FC = () => {
       const errorMessage =
         error instanceof Error
           ? error.message
-          : "An unknown error occurred during character sheet generation.";
+          : 'An unknown error occurred during character sheet generation.';
       setError(errorMessage);
-      console.error("Character sheet generation error:", error);
+      console.error('Character sheet generation error:', error);
     } finally {
       setIsSheetLoading(false);
     }
@@ -162,10 +142,7 @@ export const CharacterSheetGenerator: React.FC = () => {
     setGeneratedImage(null);
     setIsNewImageLoading(true);
     try {
-      const characterSheetFile = await dataUrlToFile(
-        characterSheet,
-        "character-sheet.png"
-      );
+      const characterSheetFile = await dataUrlToFile(characterSheet, 'character-sheet.png');
       const result = await generateNewImage(
         characterSheetFile,
         newPosePrompt,
@@ -176,7 +153,7 @@ export const CharacterSheetGenerator: React.FC = () => {
       } else {
         throw new Error(
           `The AI did not return an image. It might have returned text instead: ${
-            result.text ?? "No text provided"
+            result.text ?? 'No text provided'
           }`
         );
       }
@@ -184,9 +161,9 @@ export const CharacterSheetGenerator: React.FC = () => {
       const errorMessage =
         error instanceof Error
           ? error.message
-          : "An unknown error occurred during image generation.";
+          : 'An unknown error occurred during image generation.';
       setError(errorMessage);
-      console.error("New image generation error:", error);
+      console.error('New image generation error:', error);
     } finally {
       setIsNewImageLoading(false);
     }
@@ -195,15 +172,15 @@ export const CharacterSheetGenerator: React.FC = () => {
   const handleCopy = useCallback((): void => {
     if (generatedYaml) {
       navigator.clipboard.writeText(generatedYaml).catch((error) => {
-        console.error("Failed to copy to clipboard:", error);
-        setError("Failed to copy to clipboard");
+        console.error('Failed to copy to clipboard:', error);
+        setError('Failed to copy to clipboard');
       });
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     }
   }, [generatedYaml]);
 
-  const handleStartOver = useCallback((clearStorage = true): void => {
+  const _handleStartOver = useCallback((clearStorage = true): void => {
     if (clearStorage) {
       localStorage.removeItem(STORAGE_KEY);
     }
@@ -213,7 +190,7 @@ export const CharacterSheetGenerator: React.FC = () => {
     setGeneratedImage(null);
     setCompositionImage(null);
     setError(null);
-    setNewPosePrompt("笑顔で手を振る");
+    setNewPosePrompt('笑顔で手を振る');
   }, []);
 
   const renderWorkflow = useCallback((): React.JSX.Element => {
@@ -284,13 +261,14 @@ export const CharacterSheetGenerator: React.FC = () => {
                       className="flex-grow bg-gray-700 border border-gray-600 rounded-md p-3 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none transition-all"
                     />
                     <button
+                      type="button"
                       onClick={handleGenerateNewImage}
                       disabled={isNewImageLoading}
                       className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 focus:ring-offset-gray-900 disabled:bg-gray-500 disabled:cursor-not-allowed transition-all"
                     >
                       {isNewImageLoading ? <Loader /> : <SparklesIcon />}
                       <span className="ml-2">
-                        {isNewImageLoading ? "生成中..." : "新しい画像を生成"}
+                        {isNewImageLoading ? '生成中...' : '新しい画像を生成'}
                       </span>
                     </button>
                   </div>
@@ -298,15 +276,11 @@ export const CharacterSheetGenerator: React.FC = () => {
               </div>
 
               {isNewImageLoading && (
-                <div className="mt-4 text-center text-pink-400">
-                  AIが新しい画像を生成中です...
-                </div>
+                <div className="mt-4 text-center text-pink-400">AIが新しい画像を生成中です...</div>
               )}
               {generatedImage && (
                 <div className="mt-6">
-                  <h3 className="text-lg font-medium text-gray-300 mb-2">
-                    生成結果:
-                  </h3>
+                  <h3 className="text-lg font-medium text-gray-300 mb-2">生成結果:</h3>
                   <img
                     src={generatedImage.url}
                     alt="Generated character"
@@ -336,14 +310,13 @@ export const CharacterSheetGenerator: React.FC = () => {
             アップロードした画像からキャラクター設定を抽出し、画像生成用のYAMLプロンプトを作成します。
           </p>
           <button
+            type="button"
             onClick={handleGenerateYaml}
             disabled={isYamlLoading || !referenceImage?.file}
             className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:ring-offset-gray-900 disabled:bg-gray-500 disabled:cursor-not-allowed transition-all"
           >
             {isYamlLoading ? <Loader /> : <WandIcon />}
-            <span className="ml-2">
-              {isYamlLoading ? "生成中..." : "YAMLプロンプトを生成"}
-            </span>
+            <span className="ml-2">{isYamlLoading ? '生成中...' : 'YAMLプロンプトを生成'}</span>
           </button>
           {isYamlLoading && (
             <div className="mt-4 text-center text-purple-400">
@@ -356,6 +329,7 @@ export const CharacterSheetGenerator: React.FC = () => {
                 <code>{generatedYaml}</code>
               </pre>
               <button
+                type="button"
                 onClick={handleCopy}
                 className="absolute top-2 right-2 p-2 bg-gray-700 rounded-md hover:bg-gray-600 transition-colors"
                 aria-label="Copy YAML to clipboard"
@@ -381,14 +355,13 @@ export const CharacterSheetGenerator: React.FC = () => {
               生成されたYAMLプロンプトを基に、キャラクターの正面・背面・側面を含むリファレンスシートを作成します。
             </p>
             <button
+              type="button"
               onClick={handleGenerateSheet}
               disabled={isSheetLoading || !referenceImage?.file}
               className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 focus:ring-offset-gray-900 disabled:bg-gray-500 disabled:cursor-not-allowed transition-all"
             >
               {isSheetLoading ? <Loader /> : <PersonIcon />}
-              <span className="ml-2">
-                {isSheetLoading ? "生成中..." : "全身立ち絵を生成"}
-              </span>
+              <span className="ml-2">{isSheetLoading ? '生成中...' : '全身立ち絵を生成'}</span>
             </button>
             {isSheetLoading && (
               <div className="mt-4 text-center text-teal-400">
@@ -407,6 +380,14 @@ export const CharacterSheetGenerator: React.FC = () => {
     generatedImage,
     handleCompositionImageUpload,
     handleGenerateNewImage,
+    isYamlLoading,
+    generatedYaml,
+    copySuccess,
+    handleCopy,
+    handleGenerateYaml,
+    isSheetLoading,
+    referenceImage?.file,
+    handleGenerateSheet,
   ]);
 
   return (

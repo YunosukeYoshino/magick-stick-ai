@@ -1,5 +1,5 @@
-import { Link, useLocation } from "@tanstack/react-router";
-import { ResetIcon } from "./Icons";
+import { Link, useLocation } from '@tanstack/react-router';
+import { ResetIcon } from './Icons';
 
 export const Navigation: React.FC = () => {
   const location = useLocation();
@@ -19,9 +19,9 @@ export const Navigation: React.FC = () => {
               <Link
                 to="/"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  location.pathname === "/"
-                    ? "text-white bg-gray-700"
-                    : "text-gray-300 hover:text-white hover:bg-gray-700/50"
+                  location.pathname === '/'
+                    ? 'text-white bg-gray-700'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                 }`}
               >
                 ホーム
@@ -29,9 +29,9 @@ export const Navigation: React.FC = () => {
               <Link
                 to="/about"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  location.pathname === "/about"
-                    ? "text-white bg-gray-700"
-                    : "text-gray-300 hover:text-white hover:bg-gray-700/50"
+                  location.pathname === '/about'
+                    ? 'text-white bg-gray-700'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
                 }`}
               >
                 このアプリについて
@@ -41,8 +41,9 @@ export const Navigation: React.FC = () => {
 
           <div className="flex items-center space-x-4">
             <button
+              type="button"
               onClick={() => {
-                localStorage.removeItem("characterSheetGeneratorData");
+                localStorage.removeItem('characterSheetGeneratorData');
                 window.location.reload();
               }}
               className="flex items-center gap-2 text-sm text-gray-400 hover:text-white bg-gray-700/50 hover:bg-gray-600/70 border border-gray-600 px-3 py-2 rounded-lg transition-colors"
