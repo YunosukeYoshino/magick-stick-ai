@@ -1,9 +1,8 @@
 import path from "node:path";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig } from "vite";
 
-export default defineConfig(({ mode }) => {
-	const env = loadEnv(mode, ".", "");
+export default defineConfig(() => {
 	return {
 		plugins: [
 			tanstackRouter({
@@ -11,12 +10,13 @@ export default defineConfig(({ mode }) => {
 				routesDirectory: "./routes",
 				generatedRouteTree: "./routeTree.gen.ts",
 				autoCodeSplitting: true,
+				experimental: {
+					enableCodeSplitting: true,
+				},
+				routeFileIgnorePrefix: "-",
+				routeFileIgnorePattern: "**/.*",
 			}),
 		],
-		define: {
-			"process.env.API_KEY": JSON.stringify(env.GEMINI_API_KEY),
-			"process.env.GEMINI_API_KEY": JSON.stringify(env.GEMINI_API_KEY),
-		},
 		resolve: {
 			alias: {
 				"@": path.resolve(__dirname, "."),

@@ -41,6 +41,7 @@
 			"bunx biome check --write",
 			"bunx biome format --write"
 		],
-		"*.{json,jsonc}": ["bunx biome format --write"]
+		"*.{json,jsonc}": ["bunx biome format --write"],
+		"routeTree.gen.ts": []
 	}
 }
