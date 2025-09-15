@@ -1,5 +1,0 @@
-{
-  "name": "Character Sheet AI Assistant",
-  "description": "Upload a character image to generate a detailed YAML prompt for creating a reference sheet, and then generate new poses and expressions for your character using the Gemini API.",
-  "requestFramePermissions": []
-}

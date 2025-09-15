@@ -1,49 +1,26 @@
 {
-  "name": "character-sheet-ai-assistant",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "bun run vite",
-    "build": "bun run vite build",
-    "preview": "bun run vite preview",
-    "lint": "bunx biome lint .",
-    "lint:fix": "bunx biome lint --write .",
-    "format": "bunx biome format .",
-    "format:fix": "bunx biome format --write .",
-    "check": "bunx biome check .",
-    "check:fix": "bunx biome check --write .",
-    "typecheck": "bunx tsc --noEmit",
-    "organize-imports": "bunx biome check --organize-imports-enabled=true --write .",
-    "ci": "bun run typecheck && bun run check && bun run build",
-    "prepare": "husky"
-  },
-  "dependencies": {
-    "@google/genai": "^1.19.0",
-    "@tanstack/react-router": "^1.131.41",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@tanstack/router-plugin": "^1.131.43",
-    "@types/node": "^22.14.0",
-    "@types/react": "^19.1.13",
-    "@types/react-dom": "^19.1.9",
-    "husky": "^9.1.7",
-    "lint-staged": "^15.2.10",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
-  },
-  "packageManager": "bun@1.1.0",
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "bunx biome lint",
-      "bunx biome check --write",
-      "bunx biome format --write"
-    ],
-    "*.{json,jsonc}": [
-      "bunx biome format --write"
-    ]
-  }
+	"name": "character-sheet-ai-assistant",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"workspaces": ["apps/*"],
+	"scripts": {
+		"dev": "concurrently \"bun run dev:front\" \"bun run dev:back\"",
+		"dev:front": "cd apps/front && bun run dev",
+		"dev:back": "cd apps/backend && bun run dev",
+		"build": "bun run build:front && bun run build:back",
+		"build:front": "cd apps/front && bun run build",
+		"build:back": "cd apps/backend && bun run build",
+		"deploy": "cd apps/backend && bun run deploy",
+		"lint": "bun run lint:front",
+		"lint:front": "cd apps/front && bun run lint",
+		"format": "bun run format:front",
+		"format:front": "cd apps/front && bun run format",
+		"typecheck": "bun run typecheck:front",
+		"typecheck:front": "cd apps/front && bun run typecheck"
+	},
+	"devDependencies": {
+		"concurrently": "^8.2.2"
+	},
+	"packageManager": "bun@1.1.0"
 }

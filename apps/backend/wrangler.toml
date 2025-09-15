@@ -1,0 +1,15 @@
+name = "character-sheet-ai-assistant"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# 開発環境用の設定
+[env.development]
+name = "character-sheet-ai-assistant-dev"
+
+# 本番環境用の設定
+[env.production]
+name = "character-sheet-ai-assistant-prod"
+
+# 環境変数は Cloudflare Workers のダッシュボードで設定するか、
+# wrangler secret put コマンドで設定してください
+# wrangler secret put GEMINI_API_KEY

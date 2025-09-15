@@ -1,0 +1,16 @@
+{
+	"name": "@character-sheet-ai-assistant/backend",
+	"type": "module",
+	"scripts": {
+		"dev": "wrangler dev",
+		"deploy": "wrangler deploy --minify",
+		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
+	},
+	"dependencies": {
+		"@google/genai": "^1.19.0",
+		"hono": "^4.9.7"
+	},
+	"devDependencies": {
+		"wrangler": "^4.4.0"
+	}
+}
