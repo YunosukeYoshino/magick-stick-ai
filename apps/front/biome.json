@@ -49,7 +49,27 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+		"include": [
+			"src/**/*.ts",
+			"src/**/*.tsx",
+			"src/**/*.js",
+			"src/**/*.jsx",
+			"components/**/*.ts",
+			"components/**/*.tsx",
+			"components/**/*.js",
+			"components/**/*.jsx",
+			"routes/**/*.ts",
+			"routes/**/*.tsx",
+			"routes/**/*.js",
+			"routes/**/*.jsx",
+			"services/**/*.ts",
+			"services/**/*.js",
+			"types/**/*.ts",
+			"*.ts",
+			"*.tsx",
+			"*.js",
+			"*.jsx"
+		],
 		"ignore": [
 			"routeTree.gen.ts",
 			"node_modules/**",
