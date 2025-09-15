@@ -50,25 +50,12 @@
 	"files": {
 		"ignoreUnknown": false,
 		"include": [
-			"src/**/*.ts",
-			"src/**/*.tsx",
-			"src/**/*.js",
-			"src/**/*.jsx",
-			"components/**/*.ts",
-			"components/**/*.tsx",
-			"components/**/*.js",
-			"components/**/*.jsx",
-			"routes/**/*.ts",
-			"routes/**/*.tsx",
-			"routes/**/*.js",
-			"routes/**/*.jsx",
-			"services/**/*.ts",
-			"services/**/*.js",
+			"src/**/*.{ts,tsx,js,jsx}",
+			"components/**/*.{ts,tsx,js,jsx}",
+			"routes/**/*.{ts,tsx,js,jsx}",
+			"services/**/*.{ts,js}",
 			"types/**/*.ts",
-			"*.ts",
-			"*.tsx",
-			"*.js",
-			"*.jsx"
+			"*.{ts,tsx,js,jsx}"
 		],
 		"ignore": [
 			"routeTree.gen.ts",
@@ -79,7 +66,20 @@
 			"*.bundle.js",
 			"coverage/**",
 			".next/**",
-			"out/**"
+			"out/**",
+			"*.config.{js,ts}",
+			"vite.config.ts"
 		]
-	}
+	},
+	"overrides": [
+		{
+			"include": ["routeTree.gen.ts"],
+			"linter": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": false
+			}
+		}
+	]
 }
