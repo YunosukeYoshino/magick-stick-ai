@@ -48,15 +48,6 @@
 		}
 	},
 	"files": {
-		"ignoreUnknown": false,
-		"include": [
-			"src/**/*.{ts,tsx,js,jsx}",
-			"components/**/*.{ts,tsx,js,jsx}",
-			"routes/**/*.{ts,tsx,js,jsx}",
-			"services/**/*.{ts,js}",
-			"types/**/*.ts",
-			"*.{ts,tsx,js,jsx}"
-		],
 		"ignore": [
 			"routeTree.gen.ts",
 			"node_modules/**",
@@ -69,7 +60,8 @@
 			"out/**",
 			"*.config.{js,ts}",
 			"vite.config.ts"
-		]
+		],
+		"ignoreUnknown": false
 	},
 	"overrides": [
 		{

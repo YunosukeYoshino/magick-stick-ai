@@ -1,12 +1,13 @@
 import type { GeneratedImage, ImageState, SavedData } from "@/types/app";
 import type React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { YAML_GENERATION_PROMPT } from "../constants";
 import {
 	generateCharacterSheet,
 	generateNewImage,
 	generateYamlPrompt,
 } from "../services/geminiService";
+import { useAppContext } from "./AppContext";
 import {
 	CopyIcon,
 	ImageIcon,
@@ -37,7 +38,8 @@ async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
 
 const STORAGE_KEY = "characterSheetGeneratorData";
 
-export const CharacterSheetGenerator: React.FC = () => {
+const CharacterSheetGeneratorInner: React.FC = () => {
+	const { setResetFunction } = useAppContext();
 	const [referenceImage, setReferenceImage] = useState<ImageState | null>(null);
 	const [generatedYaml, setGeneratedYaml] = useState<string | null>(null);
 	const [isYamlLoading, setIsYamlLoading] = useState<boolean>(false);
@@ -215,6 +217,11 @@ export const CharacterSheetGenerator: React.FC = () => {
 		setError(null);
 		setNewPosePrompt("笑顔で手を振る");
 	}, []);
+
+	// Set reset function in context
+	useEffect(() => {
+		setResetFunction(() => _handleStartOver);
+	}, [_handleStartOver, setResetFunction]);
 
 	const renderWorkflow = useCallback((): React.JSX.Element => {
 		if (characterSheet) {
@@ -446,3 +453,5 @@ export const CharacterSheetGenerator: React.FC = () => {
 		</>
 	);
 };
+
+export const CharacterSheetGenerator = CharacterSheetGeneratorInner;
