@@ -1,12 +1,12 @@
 import type { GeneratedImage, ImageState, SavedData } from "@/types/app";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { YAML_GENERATION_PROMPT } from "../constants";
+import { YAML_GENERATION_PROMPT } from "@/constants";
 import {
 	generateCharacterSheet,
 	generateNewImage,
 	generateYamlPrompt,
-} from "../services/geminiService";
+} from "@/services/geminiService";
 import { useAppContext } from "./AppContext";
 import {
 	CopyIcon,

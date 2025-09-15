@@ -25,6 +25,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
+		"@tanstack/router-cli": "^1.131.44",
 		"@tanstack/router-plugin": "^1.131.43",
 		"@types/node": "^22.14.0",
 		"@types/react": "^19.1.13",
@@ -37,7 +38,8 @@
 	"packageManager": "bun@1.1.0",
 	"lint-staged": {
 		"*.{js,jsx,ts,tsx}": ["bunx biome check --write"],
+		"!**/routeTree.gen.ts": [],
 		"*.{json,jsonc}": ["bunx biome format --write"],
-		"routeTree.gen.ts": []
+		"**/routeTree.gen.ts": []
 	}
 }

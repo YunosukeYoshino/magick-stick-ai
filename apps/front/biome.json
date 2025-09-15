@@ -54,6 +54,7 @@
 	"files": {
 		"ignore": [
 			"routeTree.gen.ts",
+			"src/routeTree.gen.ts",
 			"node_modules/**",
 			"dist/**",
 			"build/**",
@@ -73,9 +74,14 @@
 	},
 	"overrides": [
 		{
-			"include": ["routeTree.gen.ts"],
+			"include": ["routeTree.gen.ts", "src/routeTree.gen.ts"],
 			"linter": {
-				"enabled": false
+				"enabled": false,
+				"rules": {
+					"suspicious": {
+						"noExplicitAny": "off"
+					}
+				}
 			},
 			"formatter": {
 				"enabled": false
