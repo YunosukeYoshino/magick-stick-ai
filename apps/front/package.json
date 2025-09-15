@@ -38,7 +38,6 @@
 	"packageManager": "bun@1.1.0",
 	"lint-staged": {
 		"*.{js,jsx,ts,tsx}": ["bunx biome check --write"],
-		"!**/routeTree.gen.ts": [],
 		"*.{json,jsonc}": ["bunx biome format --write"],
 		"**/routeTree.gen.ts": []
 	}
