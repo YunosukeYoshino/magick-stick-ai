@@ -10,11 +10,8 @@ export default defineConfig(() => {
 				routesDirectory: "./routes",
 				generatedRouteTree: "./routeTree.gen.ts",
 				autoCodeSplitting: true,
-				experimental: {
-					enableCodeSplitting: true,
-				},
 				routeFileIgnorePrefix: "-",
-				routeFileIgnorePattern: "**/.*",
+				routeFileIgnorePattern: "\\..*",
 			}),
 		],
 		resolve: {

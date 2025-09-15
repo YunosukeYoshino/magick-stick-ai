@@ -27,12 +27,7 @@
 		}
 	},
 	"formatter": {
-		"enabled": true,
-		"formatWithErrors": false,
-		"indentStyle": "space",
-		"indentWidth": 2,
-		"lineWidth": 100,
-		"lineEnding": "lf"
+		"enabled": false
 	},
 	"javascript": {
 		"formatter": {
@@ -43,8 +38,12 @@
 			"arrowParentheses": "always",
 			"bracketSpacing": true,
 			"bracketSameLine": false,
-			"quoteStyle": "single",
 			"attributePosition": "auto"
+		}
+	},
+	"json": {
+		"formatter": {
+			"enabled": true
 		}
 	},
 	"files": {
@@ -59,7 +58,11 @@
 			".next/**",
 			"out/**",
 			"*.config.{js,ts}",
-			"vite.config.ts"
+			"vite.config.ts",
+			"package.json",
+			"tsconfig.json",
+			"metadata.json",
+			"biome.json"
 		],
 		"ignoreUnknown": false
 	},
@@ -69,6 +72,12 @@
 			"linter": {
 				"enabled": false
 			},
+			"formatter": {
+				"enabled": false
+			}
+		},
+		{
+			"include": ["package.json", "tsconfig.json", "*.config.{js,ts}"],
 			"formatter": {
 				"enabled": false
 			}
