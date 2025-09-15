@@ -7,7 +7,64 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  quality-check:
+  # フロントエンドのテスト
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/front
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+
+    - name: Install dependencies
+      run: bun install
+
+    - name: Type check
+      run: bun run typecheck
+
+    - name: Lint check
+      run: bun run lint
+
+    - name: Format check
+      run: bun run format
+
+    - name: Build check
+      run: bun run build
+
+  # バックエンドのテスト
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/backend
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+
+    - name: Install dependencies
+      run: bun install
+
+    - name: Type check
+      run: bun run typecheck
+
+    - name: Build check
+      run: bun run build
+
+  # ルートレベルのテスト
+  root:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,17 +79,11 @@ jobs:
     - name: Install dependencies
       run: bun install
 
-    - name: Verify Biome installation
-      run: bunx @biomejs/biome --version
-
-    - name: Type check
-      run: bun run typecheck
-
-    - name: Lint check
-      run: bun run lint
-
-    - name: Format check
-      run: bun run format
-
-    - name: Build check
-      run: bun run build
+    - name: Verify monorepo structure
+      run: |
+        echo "Verifying monorepo structure..."
+        ls -la apps/
+        echo "Frontend package.json:"
+        cat apps/front/package.json | grep '"name"'
+        echo "Backend package.json:"
+        cat apps/backend/package.json | grep '"name"'
