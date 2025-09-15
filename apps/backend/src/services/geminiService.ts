@@ -14,30 +14,26 @@ const createAI = (env: any) => {
 	return new GoogleGenAI({ apiKey: getApiKey(env) });
 };
 
-// ファイルをBase64エンコードしてGenerative AI用の形式に変換
+// ファイルをBase64エンコードしてGenerative AI用の形式に変換（Cloudflare Workers用）
 const fileToGenerativePart = async (
 	file: File,
 ): Promise<{ inlineData: { data: string; mimeType: string } }> => {
-	const base64EncodedDataPromise = new Promise<string>((resolve, reject) => {
-		const reader = new FileReader();
-		reader.onloadend = () => {
-			const result = reader.result as string;
-			if (!result) {
-				reject(new Error("Failed to read file"));
-				return;
-			}
-			resolve(result.split(",")[1] ?? "");
-		};
-		reader.onerror = () => reject(new Error("Failed to read file"));
-		reader.readAsDataURL(file);
-	});
+	try {
+		const arrayBuffer = await file.arrayBuffer();
+		const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
 
-	return {
-		inlineData: {
-			data: await base64EncodedDataPromise,
-			mimeType: file.type,
-		},
-	};
+		return {
+			inlineData: {
+				data: base64,
+				mimeType: file.type,
+			},
+		};
+	} catch (error) {
+		throw new Error(
+			"Failed to read file: " +
+				(error instanceof Error ? error.message : "Unknown error"),
+		);
+	}
 };
 
 // YAMLプロンプトを生成する関数
