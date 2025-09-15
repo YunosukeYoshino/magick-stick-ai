@@ -1,10 +1,8 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { useAppContext } from "./AppContext";
 import { ResetIcon } from "./Icons";
 
 export const Navigation: React.FC = () => {
 	const location = useLocation();
-	const { resetApplication } = useAppContext();
 
 	return (
 		<nav className="bg-gray-800/50 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50">
@@ -46,7 +44,10 @@ export const Navigation: React.FC = () => {
 							type="button"
 							onClick={() => {
 								localStorage.removeItem("characterSheetGeneratorData");
-								resetApplication();
+								// TODO: Implement proper state reset without page reload
+								alert(
+									"データがリセットされました。ページをリロードしてください。",
+								);
 							}}
 							className="flex items-center gap-2 text-sm text-gray-400 hover:text-white bg-gray-700/50 hover:bg-gray-600/70 border border-gray-600 px-3 py-2 rounded-lg transition-colors"
 							title="データをリセット"

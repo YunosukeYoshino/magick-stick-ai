@@ -1,4 +1,3 @@
-import { AppContextProvider } from "@/components/AppContext";
 import { CharacterSheetGenerator } from "@/components/CharacterSheetGenerator";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -19,9 +18,7 @@ function IndexComponent() {
 					</p>
 				</header>
 				<main>
-					<AppContextProvider>
-						<CharacterSheetGenerator />
-					</AppContextProvider>
+					<CharacterSheetGenerator />
 				</main>
 			</div>
 		</div>

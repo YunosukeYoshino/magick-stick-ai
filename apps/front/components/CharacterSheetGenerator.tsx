@@ -39,7 +39,6 @@ async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
 const STORAGE_KEY = "characterSheetGeneratorData";
 
 const CharacterSheetGeneratorInner: React.FC = () => {
-	const { setResetFunction } = useAppContext();
 	const [referenceImage, setReferenceImage] = useState<ImageState | null>(null);
 	const [generatedYaml, setGeneratedYaml] = useState<string | null>(null);
 	const [isYamlLoading, setIsYamlLoading] = useState<boolean>(false);
@@ -217,11 +216,6 @@ const CharacterSheetGeneratorInner: React.FC = () => {
 		setError(null);
 		setNewPosePrompt("笑顔で手を振る");
 	}, []);
-
-	// Set reset function in context
-	useEffect(() => {
-		setResetFunction(() => _handleStartOver);
-	}, [_handleStartOver, setResetFunction]);
 
 	const renderWorkflow = useCallback((): React.JSX.Element => {
 		if (characterSheet) {
